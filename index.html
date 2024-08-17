@@ -59,6 +59,7 @@
             border-bottom: 2px solid #000000;
         }
 
+
         .content {
             padding-top: 80px;
             text-align: center;
@@ -78,6 +79,7 @@
         .bold {
             font-weight: bold;
         }
+
 
         body::before {
             content: "";
@@ -125,6 +127,41 @@
                 header.style.top = '0';
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        // Função para realizar a busca
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const resultsContainer = document.getElementById('searchResults');
+
+            // Lista de páginas e trechos para pesquisa
+            const pages = [
+                { title: 'Início', url: 'index.html', snippet: 'Olá! Nós somos a MCREATIONS' },
+                { title: 'História', url: 'historia.html', snippet: 'Em meados de 2020, Mateus Anghinoni, mais conhecido como MateusG_amer2010' },
+                { title: 'Wiki', url: 'wiki.html', snippet: 'Aqui você encontrará informações detalhadas sobre nossos projetos e mais.' },
+                { title: 'Jogos', url: 'jogos.html', snippet: 'Jogos da MCREATIONS' }
+            ];
+
+            // Filtra os resultados
+            const results = pages.filter(page => 
+                page.title.toLowerCase().includes(query) || 
+                page.snippet.toLowerCase().includes(query)
+            );
+
+            // Atualiza a interface com os resultados
+            resultsContainer.innerHTML = '<h2>Resultados da Pesquisa:</h2>';
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item');
+                    resultItem.innerHTML = `<a href="${result.url}">${result.title}</a><p>${result.snippet}</p>`;
+                    resultsContainer.appendChild(resultItem);
+                });
+                resultsContainer.style.display = 'block';
+            } else {
+                resultsContainer.innerHTML += '<p>Nenhum resultado encontrado.</p>';
+                resultsContainer.style.display = 'block';
+            }
         });
     </script>
 </body>
